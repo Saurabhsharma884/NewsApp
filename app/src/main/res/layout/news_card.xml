@@ -23,23 +23,27 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/news_img"
                 android:layout_width="match_parent"
                 android:layout_height="150dp" />
 
             <TextView
+                android:id="@+id/news_heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="26dp"
                 tools:text="Heading" />
 
             <TextView
+                android:id="@+id/news_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="sub-heading" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
                 tools:text="description" />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
