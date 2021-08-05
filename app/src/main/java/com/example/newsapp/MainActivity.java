@@ -2,6 +2,7 @@ package com.example.newsapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -21,9 +25,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView headingView;
+    String img_url;
     String title;
-    String API_KEY = "501582e84e1b45cca73d00d432de5aab";
+    String URL = "https://newsdata.io/api/1/news?country=us";
+    String API_KEY = "pub_732b63001661236ad6efdff3d7901657d36";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +36,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.news_card);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "https://newsapi.org/v2/top-headlines?country=in", null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("Saurabh", "onResponse: Everything is good " + response);
-//
-//                try {
-//                    JSONArray articles = response.getJSONArray("articles");
-//                    JSONObject news1 = articles.getJSONObject(0);
-//                    title = news1.getString("title");
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+//                Log.d("Saurabh", "onResponse: Everything is good " + response);
+
+                try {
+                    JSONArray results = response.getJSONArray("results");
+                    JSONObject news1 = results.getJSONObject(0);
+                    title = news1.getString("title");
+                    img_url = news1.getString("image_url");
+                    Log.d("Saurabh", "onResponse: " + title);
+                    setData(title, img_url);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -56,14 +65,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("X-Api-Key", "501582e84e1b45cca73d00d432de5aab");
+                params.put("X-ACCESS-KEY", API_KEY);
+
                 return params;
             }
         };
-
         requestQueue.add(jsonObjectRequest);
 
-        headingView = findViewById(R.id.news_heading);
-//        headingView.setText(title);
+
+    }
+
+    private void setData(String title, String img_url) {
+
+        ImageView imageView = findViewById(R.id.news_img);
+
+        Glide.with(this)
+                .load(img_url)
+                .centerCrop()
+                .error(R.drawable.ic_launcher_foreground)
+                .into(imageView);
+
+        TextView headingView = findViewById(R.id.news_heading);
+        if (title.length() > 50)
+            title = title.substring(0, 50);
+
+        headingView.setText(title + "...");
+
     }
 }
