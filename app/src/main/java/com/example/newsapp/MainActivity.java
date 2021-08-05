@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     String img_url;
     String title;
-    String URL = "https://newsdata.io/api/1/news?country=us";
+    String URL = "https://newsdata.io/api/1/news?country=in";
     String API_KEY = "pub_732b63001661236ad6efdff3d7901657d36";
 
     @Override
@@ -79,11 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.news_img);
 
-        Glide.with(this)
-                .load(img_url)
-                .centerCrop()
-                .error(R.drawable.ic_launcher_foreground)
-                .into(imageView);
+        if (img_url == null) {
+            imageView.setImageResource(R.drawable.image_not_available);
+        } else {
+            Glide.with(this)
+                    .load(img_url)
+                    .centerCrop()
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(imageView);
+        }
 
         TextView headingView = findViewById(R.id.news_heading);
         if (title.length() > 50)
