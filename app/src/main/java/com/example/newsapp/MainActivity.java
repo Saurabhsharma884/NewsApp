@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(jsonObjectRequest);
+
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
 
     }
