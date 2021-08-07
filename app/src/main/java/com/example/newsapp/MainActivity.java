@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     String img_url;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     String desc;
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
+
+    ArrayList<News> NewsArticles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,32 +43,29 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
 
                 try {
-                    JSONArray results = response.getJSONArray("articles");
-                    JSONObject news1 = results.getJSONObject(0);
-                    title = news1.getString("title");
-                    img_url = news1.getString("image");
-                    desc = news1.getString("description");
+                    JSONArray articles = response.getJSONArray("articles");
+                    for (int i = 0; i < 10; i++) {
+                        JSONObject news = articles.getJSONObject(i);
+                        title = news.getString("title");
+                        img_url = news.getString("image");
+                        desc = news.getString("description");
+
+                        NewsArticles.add(new News(title, img_url, desc));
 //                    Log.d("Saurabh", "onResponse: " + title);
-                    setData(title, img_url, desc);
-
-
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
-
             }
         });
         requestQueue.add(jsonObjectRequest);
 
-
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-
 
     }
 
