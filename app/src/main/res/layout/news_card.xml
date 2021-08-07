@@ -24,7 +24,6 @@
             <ImageView
                 android:id="@+id/news_img"
                 android:layout_width="match_parent"
-
                 android:layout_height="150dp" />
 
             <TextView
@@ -34,7 +33,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 tools:text="Heading" />
 
             <TextView
