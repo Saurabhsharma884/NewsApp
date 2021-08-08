@@ -81,6 +81,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     .load(imgUrl)
                     .centerCrop()
                     .error(R.drawable.ic_launcher_foreground)
+                    .placeholder(R.drawable.loading_buffering)
                     .into(holder.getNewsImageView());
         }
     }

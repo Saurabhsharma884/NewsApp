@@ -8,8 +8,7 @@
     android:clickable="true"
     android:elevation="20dp"
     android:focusable="true"
-    app:cardCornerRadius="5dp"
-   >
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
