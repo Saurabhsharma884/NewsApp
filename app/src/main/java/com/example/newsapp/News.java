@@ -2,9 +2,9 @@ package com.example.newsapp;
 
 public class News {
 
-    String title;
-    String img_url;
-    String desc;
+    private String title;
+    private String img_url;
+    private String desc;
 
     public News(String title, String img_url, String desc) {
         this.title = title;

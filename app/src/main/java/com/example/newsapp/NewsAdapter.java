@@ -1,6 +1,5 @@
 package com.example.newsapp;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,13 @@ import java.util.ArrayList;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private ArrayList<News> mNewsArray;
-    private Context context;
 
     public NewsAdapter(ArrayList<News> mNewsArray) {
         this.mNewsArray = mNewsArray;
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
 
         private final TextView headingTextView;
         private final TextView descriptionTextView;
@@ -54,7 +52,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_card, parent, false);
-        context = parent.getContext();
+
         return new ViewHolder(view);
     }
 
@@ -71,12 +69,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         title = title + "...";
         holder.getHeadingTextView().setText(title);
 
+
         holder.getDescriptionTextView().setText(desc);
+
+//        Log.d("Saurabh", "onBindViewHolder: " + title + desc);
 
         if (imgUrl == null) {
             holder.getNewsImageView().setImageResource(R.drawable.image_not_available);
         } else {
-            Glide.with(context)
+            Glide.with(holder.getNewsImageView().getContext())
                     .load(imgUrl)
                     .centerCrop()
                     .error(R.drawable.ic_launcher_foreground)
@@ -86,7 +87,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mNewsArray.size();
     }
 
 }

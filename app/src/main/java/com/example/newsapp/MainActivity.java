@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     String desc;
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
-
     ArrayList<News> NewsArticles = new ArrayList<>();
 
     @Override
@@ -36,22 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
-
                 try {
-                    JSONArray articles = response.getJSONArray("articles");
-                    for (int i = 0; i < 10; i++) {
-                        JSONObject news = articles.getJSONObject(i);
-                        title = news.getString("title");
-                        img_url = news.getString("image");
-                        desc = news.getString("description");
-
-                        NewsArticles.add(new News(title, img_url, desc));
-//                    Log.d("Saurabh", "onResponse: " + title);
-                    }
+                    getDataFromResponse(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -63,13 +53,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void getDataFromResponse(JSONObject response) throws JSONException {
+        JSONArray articles = response.getJSONArray("articles");
+        NewsArticles = makeArticleList(articles);
+//        Log.d("Saurabh", "onCreate: "+NewsArticles);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         NewsAdapter newsAdapter = new NewsAdapter(NewsArticles);
         recyclerView.setAdapter(newsAdapter);
-
     }
 
+    private ArrayList<News> makeArticleList(JSONArray articles) throws JSONException {
 
+        for (int i = 0; i < 10; i++) {
+            JSONObject news = articles.getJSONObject(i);
+            title = news.getString("title");
+            img_url = news.getString("image");
+            desc = news.getString("description");
+            NewsArticles.add(new News(title, img_url, desc));
+//                    Log.d("Saurabh", "onResponse: " + title);
+        }
+        return NewsArticles;
+    }
 }
