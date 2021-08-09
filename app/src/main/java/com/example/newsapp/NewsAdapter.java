@@ -1,5 +1,6 @@
 package com.example.newsapp;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     .load(imgUrl)
                     .centerCrop()
                     .error(R.drawable.ic_launcher_foreground)
-                    .placeholder(R.drawable.loading_buffering)
+                    .placeholder(Drawable.createFromPath("https://tenor.com/6IOp.gif"))
                     .into(holder.getNewsImageView());
         }
     }

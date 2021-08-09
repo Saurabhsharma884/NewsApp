@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,10 +30,13 @@ public class MainActivity extends AppCompatActivity {
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
     ArrayList<News> NewsArticles = new ArrayList<>();
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
                 try {
                     getDataFromResponse(response);
+                    swipeRefreshLayout.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -53,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonObjectRequest);
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestQueue.add(jsonObjectRequest);
+            }
+        });
     }
 
     private void getDataFromResponse(JSONObject response) throws JSONException {
