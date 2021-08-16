@@ -2,6 +2,7 @@ package com.example.newsapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     String desc;
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
+    boolean NEWS_LOADED = false;
     ArrayList<News> NewsArticles = new ArrayList<>();
 
     SwipeRefreshLayout swipeRefreshLayout;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     getDataFromResponse(response);
                     swipeRefreshLayout.setRefreshing(false);
+                    NEWS_LOADED = true;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -64,7 +67,15 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestQueue.add(jsonObjectRequest);
+
+                if (!NEWS_LOADED) {
+                    requestQueue.add(jsonObjectRequest);
+                    NEWS_LOADED = true;
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "LOADED", Toast.LENGTH_SHORT);
+                    toast.show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }
