@@ -1,5 +1,7 @@
 package com.example.newsapp;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
     boolean NEWS_LOADED = false;
     ArrayList<News> NewsArticles = new ArrayList<>();
+    RequestQueue requestQueue = Volley.newRequestQueue(this);
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -39,8 +42,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkConnectivity();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (!NEWS_LOADED) {
+                    checkConnectivity();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "LOADED", Toast.LENGTH_SHORT);
+                    toast.show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
+    }
+
+    private void checkConnectivity() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+            makeRequest();
+        } else {
+
+        }
+    }
+
+
+    private void makeRequest() {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
             @Override
@@ -62,22 +95,6 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonObjectRequest);
 
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                if (!NEWS_LOADED) {
-                    requestQueue.add(jsonObjectRequest);
-                    NEWS_LOADED = true;
-                } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "LOADED", Toast.LENGTH_SHORT);
-                    toast.show();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        });
     }
 
     private void getDataFromResponse(JSONObject response) throws JSONException {
