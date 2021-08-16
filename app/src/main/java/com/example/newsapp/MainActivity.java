@@ -4,6 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
     boolean NEWS_LOADED = false;
     ArrayList<News> NewsArticles = new ArrayList<>();
-    RequestQueue requestQueue = Volley.newRequestQueue(this);
+    RequestQueue requestQueue;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        requestQueue = Volley.newRequestQueue(this);
 
         checkConnectivity();
 
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!NEWS_LOADED) {
                     checkConnectivity();
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "LOADED", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(MainActivity.this, "LOADED", Toast.LENGTH_SHORT);
                     toast.show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
@@ -68,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             makeRequest();
         } else {
-
+            ImageView imageView = findViewById(R.id.went_wrong);
+            imageView.setImageResource(R.drawable.went_wrong);
         }
     }
-
 
     private void makeRequest() {
 
@@ -94,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(jsonObjectRequest);
-
     }
 
     private void getDataFromResponse(JSONObject response) throws JSONException {
