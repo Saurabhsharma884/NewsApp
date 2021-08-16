@@ -4,6 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     boolean NEWS_LOADED = false;
     ArrayList<News> NewsArticles = new ArrayList<>();
     RequestQueue requestQueue;
+    ImageView imageView;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -44,15 +46,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         requestQueue = Volley.newRequestQueue(this);
+        imageView = findViewById(R.id.went_wrong);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
 
         checkConnectivity();
-
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 if (!NEWS_LOADED) {
                     checkConnectivity();
                 } else {
@@ -70,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             makeRequest();
+            imageView.setVisibility(View.GONE);
         } else {
-            ImageView imageView = findViewById(R.id.went_wrong);
             imageView.setImageResource(R.drawable.went_wrong);
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
+                imageView.setImageResource(R.drawable.went_wrong);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         requestQueue.add(jsonObjectRequest);
