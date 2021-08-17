@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     boolean NEWS_LOADED = false;
     ArrayList<News> NewsArticles = new ArrayList<>();
     RequestQueue requestQueue;
-    ImageView imageView;
+
+    ImageView error_imgView;
+    TextView error_textView;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -46,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         requestQueue = Volley.newRequestQueue(this);
-        imageView = findViewById(R.id.went_wrong);
+        error_imgView = findViewById(R.id.error_imgView);
+        error_textView = findViewById(R.id.error_textView);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
 
         checkConnectivity();
@@ -71,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             makeRequest();
-            imageView.setVisibility(View.GONE);
+            error_imgView.setVisibility(View.GONE);
         } else {
-            imageView.setImageResource(R.drawable.went_wrong);
+            error_imgView.setImageResource(R.drawable.no_wifi);
             swipeRefreshLayout.setRefreshing(false);
         }
     }
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
-                imageView.setImageResource(R.drawable.went_wrong);
+//                imageView.setImageResource(R.drawable.went_wrong);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

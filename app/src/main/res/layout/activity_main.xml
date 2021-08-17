@@ -10,20 +10,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/went_wrong"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recyclerView" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MainActivity" />
+
+        <LinearLayout
+            android:id="@+id/error_view"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/recyclerView"
+            app:layout_constraintTop_toTopOf="@+id/recyclerView">
+
+            <ImageView
+                android:id="@+id/error_imgView"
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
+
+            <TextView
+                android:id="@+id/error_textView"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
