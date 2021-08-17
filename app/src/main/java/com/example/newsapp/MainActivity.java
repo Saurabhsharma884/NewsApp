@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView error_imgView;
     TextView error_textView;
+    LinearLayout error_view;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         error_imgView = findViewById(R.id.error_imgView);
         error_textView = findViewById(R.id.error_textView);
+        error_view = findViewById(R.id.error_view);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
 
         checkConnectivity();
@@ -75,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             makeRequest();
-            error_imgView.setVisibility(View.GONE);
+            error_view.setVisibility(View.GONE);
         } else {
             error_imgView.setImageResource(R.drawable.no_wifi);
+            error_textView.setText(R.string.no_network);
             swipeRefreshLayout.setRefreshing(false);
         }
     }
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
                 try {
+                    error_view.setVisibility(View.GONE);
                     getDataFromResponse(response);
                     swipeRefreshLayout.setRefreshing(false);
                     NEWS_LOADED = true;
@@ -100,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
-//                imageView.setImageResource(R.drawable.went_wrong);
+                error_imgView.setImageResource(R.drawable.error_404);
+                error_textView.setText(R.string.no_response);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

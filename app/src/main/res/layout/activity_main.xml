@@ -18,8 +18,9 @@
 
         <LinearLayout
             android:id="@+id/error_view"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,14 +34,15 @@
 
             <TextView
                 android:id="@+id/error_textView"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="Internet Not Connected,Swipe down to refresh "
                 android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
 
         </LinearLayout>
