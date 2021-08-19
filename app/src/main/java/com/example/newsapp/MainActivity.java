@@ -4,10 +4,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,12 +32,11 @@ public class MainActivity extends AppCompatActivity {
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
     boolean NEWS_LOADED = false;
+    int NETWORK_ERROR = 0;
+    int VOLLEY_ERROR = 1;
+
     ArrayList<News> NewsArticles = new ArrayList<>();
     RequestQueue requestQueue;
-
-    ImageView error_imgView;
-    TextView error_textView;
-    LinearLayout error_view;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -51,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         requestQueue = Volley.newRequestQueue(this);
-        error_imgView = findViewById(R.id.error_imgView);
-        error_textView = findViewById(R.id.error_textView);
-        error_view = findViewById(R.id.error_view);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
 
         checkConnectivity();
@@ -78,12 +70,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             makeRequest();
-            error_view.setVisibility(View.GONE);
+
         } else {
-            error_imgView.setImageResource(R.drawable.no_wifi);
-            error_textView.setText(R.string.no_network);
+            alertDialog(NETWORK_ERROR);
             swipeRefreshLayout.setRefreshing(false);
         }
+    }
+
+    private void alertDialog(int network_error) {
+
     }
 
     private void makeRequest() {
@@ -93,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
                 try {
-                    error_view.setVisibility(View.GONE);
                     getDataFromResponse(response);
                     swipeRefreshLayout.setRefreshing(false);
                     NEWS_LOADED = true;
@@ -105,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
-                error_imgView.setImageResource(R.drawable.error_404);
-                error_textView.setText(R.string.no_response);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
