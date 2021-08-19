@@ -4,6 +4,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,7 +81,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void alertDialog(int network_error) {
+    private void alertDialog(int error) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View errorView = inflater.inflate(R.layout.alert_layout, null);
+        ImageView errorImg = errorView.findViewById(R.id.alert_image);
+        TextView errorText = errorView.findViewById(R.id.alert_text);
+
+        if (error == 0) {
+            errorImg.setImageResource(R.drawable.no_wifi);
+            errorText.setText(R.string.no_network);
+
+        } else {
+            errorImg.setImageResource(R.drawable.error_404);
+            errorText.setText(R.string.no_response);
+
+        }
 
     }
 
