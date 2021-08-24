@@ -7,7 +7,7 @@
     android:layout_height="300dp"
     android:layout_margin="8dp"
     android:clickable="true"
-    android:elevation="20dp"
+    android:elevation="8dp"
     android:focusable="true"
     app:cardCornerRadius="5dp">
 
@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/news_img"
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="180dp" />
 
         <TextView
             android:id="@+id/news_heading"
@@ -34,9 +34,9 @@
         <TextView
             android:id="@+id/news_description"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:textSize="10sp"
+            android:textSize="11sp"
             tools:text="description" />
 
     </LinearLayout>
