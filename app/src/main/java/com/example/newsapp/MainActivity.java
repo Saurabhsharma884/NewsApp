@@ -53,13 +53,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!NEWS_LOADED) {
-                    checkConnectivity();
-                } else {
-                    Toast toast = Toast.makeText(MainActivity.this, "LOADED", Toast.LENGTH_SHORT);
-                    toast.show();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
+                checkConnectivity();
             }
         });
     }
@@ -69,9 +63,14 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-            makeRequest();
-
+            if (!NEWS_LOADED)
+                makeRequest();
+            else {
+                Toast.makeText(this, "LOADED", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
         } else {
+
             alertDialog(NETWORK_ERROR);
             swipeRefreshLayout.setRefreshing(false);
         }
@@ -101,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
                 swipeRefreshLayout.setRefreshing(false);
+                alertDialog(VOLLEY_ERROR);
             }
         });
         requestQueue.add(jsonObjectRequest);
