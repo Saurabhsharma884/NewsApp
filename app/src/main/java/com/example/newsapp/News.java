@@ -2,25 +2,31 @@ package com.example.newsapp;
 
 public class News {
 
-    private String title;
-    private String img_url;
-    private String desc;
+    private String mTitle;
+    private String mImg_url;
+    private String mNews_url;
+    private String mDesc;
 
-    public News(String title, String img_url, String desc) {
-        this.title = title;
-        this.img_url = img_url;
-        this.desc = desc;
+    public News(String title, String img_url, String desc, String news_url) {
+        this.mTitle = title;
+        this.mImg_url = img_url;
+        this.mDesc = desc;
+        this.mNews_url = news_url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getmTitle() {
+        return mTitle;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getmImg_url() {
+        return mImg_url;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getmNews_url() {
+        return mNews_url;
+    }
+
+    public String getmDesc() {
+        return mDesc;
     }
 }

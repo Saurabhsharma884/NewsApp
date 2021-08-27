@@ -4,11 +4,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     String img_url;
+    String news_url;
     String title;
     String desc;
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
@@ -111,10 +111,9 @@ public class MainActivity extends AppCompatActivity {
         NewsArticles = makeArticleList(articles);
 //        Log.d("Saurabh", "onCreate: "+NewsArticles);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        NewsAdapter newsAdapter = new NewsAdapter(NewsArticles);
-        recyclerView.setAdapter(newsAdapter);
+        ListView listView = findViewById(R.id.news_list);
+        NewsAdapter newsAdapter = new NewsAdapter(this, NewsArticles);
+        listView.setAdapter(newsAdapter);
     }
 
     private ArrayList<News> makeArticleList(JSONArray articles) throws JSONException {
@@ -124,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
             title = news.getString("title");
             img_url = news.getString("image");
             desc = news.getString("description");
-            NewsArticles.add(new News(title, img_url, desc));
+            news_url = news.getString("url");
+            NewsArticles.add(new News(title, img_url, desc, news_url));
 //                    Log.d("Saurabh", "onResponse: " + title);
         }
         return NewsArticles;
