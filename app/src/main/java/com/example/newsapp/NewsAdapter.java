@@ -5,9 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -32,8 +36,25 @@ public class NewsAdapter extends ArrayAdapter<News> {
         String imgUrl = currentNews.getmImg_url();
         String desc = currentNews.getmDesc();
 
+        TextView headingText = listItemView.findViewById(R.id.news_heading);
+        TextView descText = listItemView.findViewById(R.id.news_description);
+        ImageView newsImg = listItemView.findViewById(R.id.news_img);
 
-        return super.getView(position, convertView, parent);
+        if (title.length() > 50)
+            title = title.substring(0, 50);
+        title = title + "...";
+        headingText.setText(title);
+        descText.setText(desc);
+
+        Glide.with(getContext())
+                .load(imgUrl)
+                .centerCrop()
+                .error(R.drawable.image_not_available)
+                .placeholder(R.drawable.hourglass)
+                .into(newsImg);
+
+
+        return listItemView;
     }
 
 
