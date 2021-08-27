@@ -25,23 +25,23 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView headingTextView;
-        private final TextView descriptionTextView;
+//        private final TextView descriptionTextView;
         private final ImageView newsImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             newsImageView = itemView.findViewById(R.id.news_img);
             headingTextView = itemView.findViewById(R.id.news_heading);
-            descriptionTextView = itemView.findViewById(R.id.news_description);
+//            descriptionTextView = itemView.findViewById(R.id.news_description);
         }
 
         public TextView getHeadingTextView() {
             return headingTextView;
         }
 
-        public TextView getDescriptionTextView() {
-            return descriptionTextView;
-        }
+//        public TextView getDescriptionTextView() {
+//            return descriptionTextView;
+//        }
 
         public ImageView getNewsImageView() {
             return newsImageView;
@@ -52,7 +52,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_card, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -70,20 +69,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.getHeadingTextView().setText(title);
 
 
-        holder.getDescriptionTextView().setText(desc);
+//        holder.getDescriptionTextView().setText(desc);
 
 //        Log.d("Saurabh", "onBindViewHolder: " + title + desc);
 
-        if (imgUrl == null) {
-            holder.getNewsImageView().setImageResource(R.drawable.image_not_available);
-        } else {
-            Glide.with(holder.getNewsImageView().getContext())
-                    .load(imgUrl)
-                    .centerCrop()
-                    .error(R.drawable.image_not_available)
-                    .placeholder(R.drawable.hourglass)
-                    .into(holder.getNewsImageView());
-        }
+        Glide.with(holder.getNewsImageView().getContext())
+                .load(imgUrl)
+                .centerCrop()
+                .error(R.drawable.image_not_available)
+                .placeholder(R.drawable.hourglass)
+                .into(holder.getNewsImageView());
+
     }
 
     @Override
