@@ -4,6 +4,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String news_url;
     String title;
     String desc;
+
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
     boolean NEWS_LOADED = false;
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeRequest() {
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -114,6 +116,17 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.news_list);
         NewsAdapter newsAdapter = new NewsAdapter(this, NewsArticles);
         listView.setAdapter(newsAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                News cur = NewsArticles.get(position);
+
+                Log.d("saurabh", "onItemClick: item clicked was " + cur.getmTitle());
+
+            }
+        });
     }
 
     private ArrayList<News> makeArticleList(JSONArray articles) throws JSONException {
