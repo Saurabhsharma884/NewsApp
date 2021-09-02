@@ -4,8 +4,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -51,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
-        checkConnectivity();
 
+        checkConnectivity();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -60,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 checkConnectivity();
             }
         });
+
+        ListView listView = findViewById(R.id.news_list);
+        NewsAdapter newsAdapter = new NewsAdapter(this, newsArticles);
+        listView.setAdapter(newsAdapter);
+
 
     }
 
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeRequest() {
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -113,18 +117,6 @@ public class MainActivity extends AppCompatActivity {
         JSONArray articles = response.getJSONArray("articles");
         newsArticles = makeArticleList(articles);
 
-
-        ListView listView = findViewById(R.id.news_list);
-        NewsAdapter newsAdapter = new NewsAdapter(this, newsArticles);
-        listView.setAdapter(newsAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "onItemClick: " + position);
-                Toast.makeText(getApplicationContext(), "Item Clicked " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private ArrayList<News> makeArticleList(JSONArray articles) throws JSONException {

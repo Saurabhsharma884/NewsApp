@@ -53,6 +53,13 @@ public class NewsAdapter extends ArrayAdapter<News> {
                 .placeholder(R.drawable.hourglass)
                 .into(newsImg);
 
+        listItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         return listItemView;
     }
