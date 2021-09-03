@@ -1,6 +1,7 @@
 package com.example.newsapp;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         String title = currentNews.getmTitle();
         String imgUrl = currentNews.getmImg_url();
         String desc = currentNews.getmDesc();
+        Uri newsUri = Uri.parse(currentNews.getmNews_url());
 
         TextView headingText = listItemView.findViewById(R.id.news_heading);
         TextView descText = listItemView.findViewById(R.id.news_description);
@@ -56,6 +58,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//               Intent
 
             }
         });
