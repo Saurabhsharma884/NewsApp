@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
                 try {
                     makeListFromResponse(response);
-
                     NEWS_LOADED = true;
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         requestQueue.add(jsonObjectRequest);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     void makeListFromResponse(JSONObject response) throws JSONException {
@@ -109,13 +110,11 @@ public class MainActivity extends AppCompatActivity {
                 makeRequest();
             else {
                 Toast.makeText(this, "LOADED", Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
             }
         } else {
             alertDialog(NETWORK_ERROR);
-            swipeRefreshLayout.setRefreshing(false);
-
         }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     void alertDialog(int error) {
