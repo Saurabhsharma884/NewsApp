@@ -1,6 +1,7 @@
 package com.example.newsapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,11 @@ import java.util.ArrayList;
 public class NewsAdapter extends ArrayAdapter<News> {
 
 
+    private final Context context;
+
     public NewsAdapter(Context context, ArrayList<News> mNewsArray) {
         super(context, 0, mNewsArray);
+        this.context = context;
     }
 
     @NonNull
@@ -58,53 +62,12 @@ public class NewsAdapter extends ArrayAdapter<News> {
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               Intent
+                Intent intent = new Intent(Intent.ACTION_VIEW, newsUri);
+                context.startActivity(intent);
 
             }
         });
 
-
         return listItemView;
     }
-
-
-//    @NonNull
-//    @Override
-//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_card, parent, false);
-//        return new ViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        News news = mNewsArray.get(position);
-//
-//        String title = news.getTitle();
-//        String imgUrl = news.getImg_url();
-//        String desc = news.getDesc();
-//
-//        if (title.length() > 50)
-//            title = title.substring(0, 50);
-//        title = title + "...";
-//        holder.getHeadingTextView().setText(title);
-//
-//
-////        holder.getDescriptionTextView().setText(desc);
-//
-////        Log.d("Saurabh", "onBindViewHolder: " + title + desc);
-//
-//        Glide.with(holder.getNewsImageView().getContext())
-//                .load(imgUrl)
-//                .centerCrop()
-//                .error(R.drawable.image_not_available)
-//                .placeholder(R.drawable.hourglass)
-//                .into(holder.getNewsImageView());
-//
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return mNewsArray.size();
-//    }
-
 }
