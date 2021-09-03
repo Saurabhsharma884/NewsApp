@@ -25,22 +25,22 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
     String img_url;
     String news_url;
     String title;
     String desc;
     String TAG = "Saurabh";
-
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
+
     boolean NEWS_LOADED = false;
     int NETWORK_ERROR = 0;
     int VOLLEY_ERROR = 1;
 
-    ArrayList<News> newsArticles = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
     RequestQueue requestQueue;
-
+    ArrayList<News> newsArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
-
         checkConnectivity();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -58,15 +57,51 @@ public class MainActivity extends AppCompatActivity {
                 checkConnectivity();
             }
         });
+    }
+
+    void makeRequest() {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+//                Log.d("Saurabh", "onResponse: Everything is good " + response);
+                try {
+                    makeListFromResponse(response);
+
+                    NEWS_LOADED = true;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
+                alertDialog(VOLLEY_ERROR);
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    void makeListFromResponse(JSONObject response) throws JSONException {
+        JSONArray articles = response.getJSONArray("articles");
+        for (int i = 0; i < 10; i++) {
+            JSONObject news = articles.getJSONObject(i);
+            title = news.getString("title");
+            img_url = news.getString("image");
+            desc = news.getString("description");
+            news_url = news.getString("url");
+            newsArrayList.add(new News(title, img_url, desc, news_url));
+        }
 
         ListView listView = findViewById(R.id.news_list);
-        NewsAdapter newsAdapter = new NewsAdapter(this, newsArticles);
+        NewsAdapter newsAdapter = new NewsAdapter(this, newsArrayList);
         listView.setAdapter(newsAdapter);
-
 
     }
 
-    private void checkConnectivity() {
+    public void checkConnectivity() {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
@@ -83,53 +118,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void alertDialog(int error) {
+    void alertDialog(int error) {
         AlertFragment alert = new AlertFragment(error);
         alert.show(getSupportFragmentManager(), "alert");
     }
 
-    private void makeRequest() {
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-//                Log.d("Saurabh", "onResponse: Everything is good " + response);
-                try {
-                    getDataFromResponse(response);
-                    swipeRefreshLayout.setRefreshing(false);
-                    NEWS_LOADED = true;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Saurabh", "onErrorResponse: Something Went Wrong " + error);
-                swipeRefreshLayout.setRefreshing(false);
-                alertDialog(VOLLEY_ERROR);
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private void getDataFromResponse(JSONObject response) throws JSONException {
-        JSONArray articles = response.getJSONArray("articles");
-        newsArticles = makeArticleList(articles);
-
-    }
-
-    private ArrayList<News> makeArticleList(JSONArray articles) throws JSONException {
-        for (int i = 0; i < 10; i++) {
-            JSONObject news = articles.getJSONObject(i);
-            title = news.getString("title");
-            img_url = news.getString("image");
-            desc = news.getString("description");
-            news_url = news.getString("url");
-            newsArticles.add(new News(title, img_url, desc, news_url));
-//                    Log.d("Saurabh", "onResponse: " + title);
-        }
-        return newsArticles;
-    }
 }
 

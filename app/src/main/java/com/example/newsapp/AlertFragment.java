@@ -15,7 +15,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class AlertFragment extends DialogFragment {
 
-    private int errorType;
+    private final int errorType;
 
     public AlertFragment(int error) {
         this.errorType = error;
