@@ -1,6 +1,8 @@
 package com.example.newsapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private final Context context;
     private final ArrayList<News> mNewsArray;
+
 
     public NewsAdapter(Context context, ArrayList<News> mNewsArray) {
         this.mNewsArray = mNewsArray;
@@ -55,12 +58,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(context).inflate(R.layout.news_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         News curNews = mNewsArray.get(position);
 
@@ -80,6 +84,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 .error(R.drawable.image_not_available)
                 .placeholder(R.drawable.hourglass)
                 .into(holder.getNewsImageView());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(curNews.getmNews_url()));
+                context.startActivity(intent);
+            }
+        });
 
     }
 
