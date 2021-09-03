@@ -4,10 +4,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
@@ -96,9 +97,10 @@ public class MainActivity extends AppCompatActivity {
             newsArrayList.add(new News(title, img_url, desc, news_url));
         }
 
-        ListView listView = findViewById(R.id.news_list);
+        RecyclerView recyclerView = findViewById(R.id.news_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         NewsAdapter newsAdapter = new NewsAdapter(this, newsArrayList);
-        listView.setAdapter(newsAdapter);
+        recyclerView.setAdapter(newsAdapter);
 
     }
 

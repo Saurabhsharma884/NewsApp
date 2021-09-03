@@ -1,73 +1,90 @@
 package com.example.newsapp;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class NewsAdapter extends ArrayAdapter<News> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
 
     private final Context context;
+    private final ArrayList<News> mNewsArray;
 
     public NewsAdapter(Context context, ArrayList<News> mNewsArray) {
-        super(context, 0, mNewsArray);
+        this.mNewsArray = mNewsArray;
         this.context = context;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView headingTextView;
+        private final TextView descriptionTextView;
+        private final ImageView newsImageView;
+
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            newsImageView = itemView.findViewById(R.id.news_img);
+            headingTextView = itemView.findViewById(R.id.news_heading);
+            descriptionTextView = itemView.findViewById(R.id.news_description);
+        }
+
+        public TextView getHeadingTextView() {
+            return headingTextView;
+        }
+
+        public TextView getDescriptionTextView() {
+            return descriptionTextView;
+        }
+
+        public ImageView getNewsImageView() {
+            return newsImageView;
+        }
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.news_card, parent, false);
+        return new ViewHolder(view);
+    }
 
-        View listItemView = convertView;
-        if (listItemView == null)
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.news_card, parent, false);
+    @Override
+    public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder holder, int position) {
 
-        News currentNews = getItem(position);
+        News curNews = mNewsArray.get(position);
 
-        String title = currentNews.getmTitle();
-        String imgUrl = currentNews.getmImg_url();
-        String desc = currentNews.getmDesc();
-        Uri newsUri = Uri.parse(currentNews.getmNews_url());
-
-        TextView headingText = listItemView.findViewById(R.id.news_heading);
-        TextView descText = listItemView.findViewById(R.id.news_description);
-        ImageView newsImg = listItemView.findViewById(R.id.news_img);
+        String title = curNews.getmTitle();
+        String imgUrl = curNews.getmImg_url();
+        String desc = curNews.getmDesc();
 
         if (title.length() > 50)
             title = title.substring(0, 50);
         title = title + "...";
-        headingText.setText(title);
-        descText.setText(desc);
+        holder.getHeadingTextView().setText(title);
+        holder.getDescriptionTextView().setText(desc);
 
-        Glide.with(getContext())
+        Glide.with(context)
                 .load(imgUrl)
                 .centerCrop()
                 .error(R.drawable.image_not_available)
                 .placeholder(R.drawable.hourglass)
-                .into(newsImg);
+                .into(holder.getNewsImageView());
 
-        listItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, newsUri);
-                context.startActivity(intent);
+    }
 
-            }
-        });
-
-        return listItemView;
+    @Override
+    public int getItemCount() {
+        return mNewsArray.size();
     }
 }
