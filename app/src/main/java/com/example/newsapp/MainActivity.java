@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar mtoolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(mtoolbar);
+
         requestQueue = Volley.newRequestQueue(this);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         checkConnectivity();
@@ -73,15 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(getApplicationContext(), "item clicked", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+        if (item.getItemId() == R.id.item_setting)
+            Toast.makeText(this, "setting clicked", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
+
 
     void makeRequest() {
 
