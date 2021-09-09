@@ -26,12 +26,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
     String img_url;
     String news_url;
     String title;
     String desc;
     String TAG = "Saurabh";
+
     String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
 
