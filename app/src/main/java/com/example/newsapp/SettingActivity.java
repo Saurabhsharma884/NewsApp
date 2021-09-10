@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -24,6 +26,14 @@ public class SettingActivity extends AppCompatActivity {
         langSpinner = findViewById(R.id.language_spinner);
         setCountrySpinner();
         setLangSpinner();
+
+        Button saveBtn = findViewById(R.id.save_btn);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(SettingActivity.this);
+            }
+        });
 
     }
 

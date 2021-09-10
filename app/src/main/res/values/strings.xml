@@ -21,4 +21,5 @@
     <string name="jh">Chinese</string>
     <string name="ar">Arabic</string>
     <string name="news_language">Language</string>
+    <string name="setting_save">Save</string>
 </resources>
