@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".SettingActivity"
             android:exported="true" />
         <activity

@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mtoolbar = findViewById(R.id.toolBar);
         setSupportActionBar(mtoolbar);
 
+
         requestQueue = Volley.newRequestQueue(this);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         checkConnectivity();

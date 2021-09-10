@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="country_list_array">
+        <item>@string/any</item>
+        <item>@string/cn</item>
+        <item>@string/in</item>
+        <item>@string/jp</item>
+        <item>@string/pk</item>
+        <item>@string/us</item>
+    </string-array>
+
+    <string-array name="lang_array">
+        <item>@string/en</item>
+        <item>@string/hi</item>
+        <item>@string/ja</item>
+        <item>@string/jh</item>
+        <item>@string/ar</item>
+    </string-array>
+
+</resources>
