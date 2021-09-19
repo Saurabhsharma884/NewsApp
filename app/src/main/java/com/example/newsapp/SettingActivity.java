@@ -5,13 +5,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 public class SettingActivity extends AppCompatActivity {
+
+    private boolean modeState;
 
     Spinner countrySpinner;
     Spinner langSpinner;
@@ -25,16 +30,13 @@ public class SettingActivity extends AppCompatActivity {
 
         countrySpinner = findViewById(R.id.countrylist_spinner);
         langSpinner = findViewById(R.id.language_spinner);
+        SwitchMaterial modeSwitch = findViewById(R.id.mode_switch);
+        Button saveBtn = findViewById(R.id.save_btn);
+        modeSwitch.setChecked(modeState);
+
         setCountrySpinner();
         setLangSpinner();
 
-        Button saveBtn = findViewById(R.id.save_btn);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavUtils.navigateUpFromSameTask(SettingActivity.this);
-            }
-        });
 
         ImageButton backBtn = findViewById(R.id.back_Btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +45,23 @@ public class SettingActivity extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(SettingActivity.this);
             }
         });
+
+        modeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                modeState = isChecked;
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                NavUtils.navigateUpFromSameTask(SettingActivity.this);
+            }
+        });
+
 
     }
 
