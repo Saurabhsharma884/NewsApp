@@ -1,6 +1,8 @@
 package com.example.newsapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -16,23 +19,34 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class SettingActivity extends AppCompatActivity {
 
+    private final String MODE_KEY = "uiMode";
+    private final String COUNTRY_KEY = "savedCountry";
+    private final String LANGUAGE_KEY = "savedLanguage";
+
     private boolean modeState;
 
-    Spinner countrySpinner;
-    Spinner langSpinner;
     private static String country;
+
     private static String language;
+
+    public static String getCountry() {
+        return country;
+    }
+
+    public static String getLanguage() {
+        return language;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        countrySpinner = findViewById(R.id.countrylist_spinner);
-        langSpinner = findViewById(R.id.language_spinner);
+
         SwitchMaterial modeSwitch = findViewById(R.id.mode_switch);
-        Button saveBtn = findViewById(R.id.save_btn);
         modeSwitch.setChecked(modeState);
+
+        Button saveBtn = findViewById(R.id.save_btn);
 
         setCountrySpinner();
         setLangSpinner();
@@ -46,6 +60,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+
         modeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -56,16 +71,28 @@ public class SettingActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                saveSettings();
+                Log.d("Saurabh", "saveSettings:" + country + " " + language);
+                Toast.makeText(getApplicationContext(), "Settings Saved", Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpFromSameTask(SettingActivity.this);
             }
         });
 
+    }
+
+    private void saveSettings() {
+
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(MODE_KEY, modeState);
+        editor.putString(COUNTRY_KEY, country);
+        editor.putString(LANGUAGE_KEY, language);
+        editor.apply();
 
     }
 
     private void setLangSpinner() {
+        Spinner langSpinner = findViewById(R.id.language_spinner);
         ArrayAdapter<CharSequence> langSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.lang_array, android.R.layout.simple_spinner_item);
         langSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         langSpinner.setAdapter(langSpinnerAdapter);
@@ -84,6 +111,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setCountrySpinner() {
+        Spinner countrySpinner = findViewById(R.id.countrylist_spinner);
         ArrayAdapter<CharSequence> countrySpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.country_list_array, android.R.layout.simple_spinner_item);
         countrySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countrySpinner.setAdapter(countrySpinnerAdapter);
