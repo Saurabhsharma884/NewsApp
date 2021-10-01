@@ -3,6 +3,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/layoutbg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,6 +19,7 @@
 
     <TextView
         android:id="@+id/alert_text"
+        style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -28,6 +30,7 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/swipe_refresh"
@@ -37,7 +40,7 @@
 
     <Button
         android:id="@+id/dismiss_button"
-        style="?attr/materialButtonOutlinedStyle"
+        style="@style/smtbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

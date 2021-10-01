@@ -10,4 +10,7 @@
     <color name="barColor">#212121</color>
     <color name="lightGray">#eceff1</color>
     <color name="textColor">#263238</color>
+    <color name="gray_dark">#000a12</color>
+    <color name="gray_light">#4f5b62</color>
+    <color name="gray_medium">#263238</color>
 </resources>
