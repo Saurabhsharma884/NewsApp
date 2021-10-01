@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     String desc;
     String TAG = "Saurabh";
 
-    String URL = "https://gnews.io/api/v4/top-headlines?country=in&lang=en&token=";
+    String URL_BASE = "https://gnews.io/api/v4/top-headlines?";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
 
     boolean NEWS_LOADED = false;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     void makeRequest() {
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL + API_KEY, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private String getRequestUrl() {
+        return URL_BASE + "country=" + SettingActivity.getCountry() + "&lang=" + SettingActivity.getLanguage() + "&token=" + API_KEY;
     }
 
     void makeListFromResponse(JSONObject response) throws JSONException {

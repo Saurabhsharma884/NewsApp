@@ -50,10 +50,10 @@ public class SettingActivity extends AppCompatActivity {
         langSpinner = findViewById(R.id.language_spinner);
         countrySpinner = findViewById(R.id.countrylist_spinner);
 
-        setSettings();
-
         setCountrySpinner();
         setLangSpinner();
+
+        setSettings();
 
         SwitchMaterial modeSwitch = findViewById(R.id.mode_switch);
         modeSwitch.setChecked(modeState);
