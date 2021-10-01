@@ -27,11 +27,11 @@
     </style>
 
     <style name="layoutbg">
-        <item name="android:backgroundTint">@color/lightGray</item>
+        <item name="android:background">@color/lightGray</item>
     </style>
 
     <style name="cardTheme">
-        <item name="cardBackgroundColor">@color/black</item>
+        <item name="cardBackgroundColor">@color/white</item>
     </style>
 
     <style name="barbg">
@@ -45,5 +45,21 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="barIcon">
+        <item name="tint">@color/black</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="text">
+        <item name="android:textColor">
+            @color/textColor
+        </item>
+    </style>
+
+    <style name="smtbtn">
+        <item name="android:backgroundTint">@color/barColor</item>
+    </style>
+
 
 </resources>
