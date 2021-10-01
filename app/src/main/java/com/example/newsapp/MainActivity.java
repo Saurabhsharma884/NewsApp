@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String[] languages = {"en", "hi", "ja", "jh", "ar"};
     private static final String[] countries = {"any", "cn", "in", "jp", "pk", "us"};
+    private boolean modeState;
 
     String img_url;
     String news_url;
@@ -79,11 +80,18 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
         language = sharedPreferences.getInt("savedLanguage", 0);
         country = sharedPreferences.getInt("savedCountry", 0);
+        modeState = sharedPreferences.getBoolean("uiMode", false);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.settings_menu, menu);
+        MenuItem item = menu.findItem(R.id.item_setting);
+        if (modeState)
+            item.setIcon(R.drawable.ic_baseline_settings_24);
+        else
+            item.setIcon(R.drawable.ic_baseline_settings_24_dark);
         return true;
     }
 

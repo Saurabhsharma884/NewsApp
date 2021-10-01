@@ -46,6 +46,7 @@ public class SettingActivity extends AppCompatActivity {
         SwitchMaterial modeSwitch = findViewById(R.id.mode_switch);
         modeSwitch.setChecked(modeState);
 
+
         Button saveBtn = findViewById(R.id.save_btn);
 
 
