@@ -106,29 +106,12 @@ public class SettingActivity extends AppCompatActivity {
         langSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                switch ((String) parent.getItemAtPosition(position)) {
-                    case "Hindi":
-                        MainActivity.language = "hi";
-                        break;
-                    case "Japanese":
-                        MainActivity.language = "ja";
-                        break;
-                    case "Chinese":
-                        MainActivity.language = "jh";
-                        break;
-                    case "Arabic":
-                        MainActivity.language = "ar";
-                        break;
-                    default:
-                        MainActivity.language = "eng";
-                }
                 languageSelection = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                MainActivity.language = "en";
+                languageSelection = 0;
             }
         });
     }
@@ -142,32 +125,12 @@ public class SettingActivity extends AppCompatActivity {
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.country = (String) parent.getItemAtPosition(position);
-                switch ((String) parent.getItemAtPosition(position)) {
-                    case "United States":
-                        MainActivity.country = "us";
-                        break;
-                    case "Pakistan":
-                        MainActivity.country = "pk";
-                        break;
-                    case "Japan":
-                        MainActivity.country = "jp";
-                        break;
-                    case "India":
-                        MainActivity.country = "in";
-                        break;
-                    case "China":
-                        MainActivity.country = "cn";
-                        break;
-                    default:
-                        MainActivity.country = "any";
-                }
                 countrySelection = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                MainActivity.country = "All";
+                countrySelection = 0;
             }
         });
     }

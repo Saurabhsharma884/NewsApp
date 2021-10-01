@@ -1,6 +1,7 @@
 package com.example.newsapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -39,12 +40,8 @@ public class MainActivity extends AppCompatActivity {
     String title;
     String desc;
     String TAG = "Saurabh";
-    static String country = "in";
-    static String language = "eng";
-
-    String URL_BASE = "https://gnews.io/api/v4/top-headlines?";
-    String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
-
+    static int country;
+    static int language;
 
     boolean NEWS_LOADED = false;
     int NETWORK_ERROR = 0;
@@ -58,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSettings();
 
         Toolbar mtoolbar = findViewById(R.id.toolBar);
         setSupportActionBar(mtoolbar);
@@ -74,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
+        language = sharedPreferences.getInt("savedLanguage", 0);
+        country = sharedPreferences.getInt("savedCountry", 0);
     }
 
     @Override
@@ -120,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getRequestUrl() {
-        return URL_BASE + "country=" + country + "&lang=" + language + "&token=" + API_KEY;
+        String URL_BASE = "https://gnews.io/api/v4/top-headlines?";
+        String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
+        return URL_BASE + "country=" + countries[country] + "&lang=" + languages[language] + "&token=" + API_KEY;
     }
 
     void makeListFromResponse(JSONObject response) throws JSONException {
