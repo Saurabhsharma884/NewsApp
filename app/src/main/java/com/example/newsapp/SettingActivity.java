@@ -27,18 +27,6 @@ public class SettingActivity extends AppCompatActivity {
 
     private boolean modeState;
 
-    private static String country;
-
-    private static String language;
-
-    public static String getCountry() {
-        return country;
-    }
-
-    public static String getLanguage() {
-        return language;
-    }
-
     Spinner langSpinner;
     Spinner countrySpinner;
 
@@ -81,7 +69,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveSettings();
-                Log.d("Saurabh", "saveSettings:" + country + " " + language);
+                Log.d("Saurabh", "saveSettings:" + MainActivity.country + " " + MainActivity.language);
                 Toast.makeText(getApplicationContext(), "Settings Saved", Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpFromSameTask(SettingActivity.this);
             }
@@ -118,13 +106,29 @@ public class SettingActivity extends AppCompatActivity {
         langSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                language = (String) parent.getItemAtPosition(position);
+
+                switch ((String) parent.getItemAtPosition(position)) {
+                    case "Hindi":
+                        MainActivity.language = "hi";
+                        break;
+                    case "Japanese":
+                        MainActivity.language = "ja";
+                        break;
+                    case "Chinese":
+                        MainActivity.language = "jh";
+                        break;
+                    case "Arabic":
+                        MainActivity.language = "ar";
+                        break;
+                    default:
+                        MainActivity.language = "eng";
+                }
                 languageSelection = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                language = "en";
+                MainActivity.language = "en";
             }
         });
     }
@@ -138,13 +142,32 @@ public class SettingActivity extends AppCompatActivity {
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                country = (String) parent.getItemAtPosition(position);
+                MainActivity.country = (String) parent.getItemAtPosition(position);
+                switch ((String) parent.getItemAtPosition(position)) {
+                    case "United States":
+                        MainActivity.country = "us";
+                        break;
+                    case "Pakistan":
+                        MainActivity.country = "pk";
+                        break;
+                    case "Japan":
+                        MainActivity.country = "jp";
+                        break;
+                    case "India":
+                        MainActivity.country = "in";
+                        break;
+                    case "China":
+                        MainActivity.country = "cn";
+                        break;
+                    default:
+                        MainActivity.country = "any";
+                }
                 countrySelection = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                country = "All";
+                MainActivity.country = "All";
             }
         });
     }

@@ -31,14 +31,20 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String[] languages = {"en", "hi", "ja", "jh", "ar"};
+    private static final String[] countries = {"any", "cn", "in", "jp", "pk", "us"};
+
     String img_url;
     String news_url;
     String title;
     String desc;
     String TAG = "Saurabh";
+    static String country = "in";
+    static String language = "eng";
 
     String URL_BASE = "https://gnews.io/api/v4/top-headlines?";
     String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
+
 
     boolean NEWS_LOADED = false;
     int NETWORK_ERROR = 0;
@@ -88,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     void makeRequest() {
-
+        Log.d(TAG, "makeRequest: URL is: " + getRequestUrl());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -114,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getRequestUrl() {
-        return URL_BASE + "country=" + SettingActivity.getCountry() + "&lang=" + SettingActivity.getLanguage() + "&token=" + API_KEY;
+        return URL_BASE + "country=" + country + "&lang=" + language + "&token=" + API_KEY;
     }
 
     void makeListFromResponse(JSONObject response) throws JSONException {
