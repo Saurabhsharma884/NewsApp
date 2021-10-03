@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_setting) {
             Toast.makeText(this, "setting clicked", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

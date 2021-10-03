@@ -13,9 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".SettingActivity"
+            android:name=".SettingsActivity"
             android:exported="true" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"

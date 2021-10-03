@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="@string/pref_mode_default"
+        android:summaryOff="@string/pref_summary_off"
+        android:summaryOn="@string/pref_summary_on"
+        android:title="@string/pref_mode_title" />
+
+    <DropDownPreference android:title="@string/pref_drop_down_country_title" />
+    <DropDownPreference android:title="@string/pref_drop_down_language_title" />
+
+</PreferenceScreen>
