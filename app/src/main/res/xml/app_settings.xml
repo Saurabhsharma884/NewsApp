@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
+        android:key="@string/pref_ui_mode_key"
         android:defaultValue="@string/pref_mode_default"
         android:summaryOff="@string/pref_summary_off"
         android:summaryOn="@string/pref_summary_on"
         android:title="@string/pref_mode_title" />
 
-    <DropDownPreference android:title="@string/pref_drop_down_country_title"
+    <DropDownPreference
+        android:title="@string/pref_drop_down_country_title"
+        android:key="@string/pref_country_key"
+        android:defaultValue="@string/pref_country_any_values"
+
 
         />
 
-    <DropDownPreference android:title="@string/pref_drop_down_language_title" />
+    <DropDownPreference
+        android:title="@string/pref_drop_down_language_title"
+        android:key="@string/pref_language_key"
+        android:defaultValue="@string/pref_lang_english_values"
+
+
+        />
 
 </PreferenceScreen>

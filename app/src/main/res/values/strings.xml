@@ -6,23 +6,6 @@
     <string name="ok">OK</string>
 
     <string name="settings">Settings</string>
-    <string name="ui_mode">Mode</string>
-    <string name="news_country">Country</string>
-
-    <string name="us">United States</string>
-    <string name="pk">Pakistan</string>
-    <string name="jp">Japan</string>
-    <string name="in">India</string>
-    <string name="cn">China</string>
-    <string name="any">All</string>
-
-    <string name="en">English</string>
-    <string name="hi">Hindi</string>
-    <string name="ja">Japanese</string>
-    <string name="jh">Chinese</string>
-    <string name="ar">Arabic</string>
-    <string name="news_language">Language</string>
-    <string name="setting_save">Save</string>
 
     <string name="pref_mode_title">Dark Mode</string>
     <string name="pref_summary_off">Disabled</string>
@@ -30,6 +13,10 @@
 
     <string name="pref_drop_down_country_title">Country</string>
     <string name="pref_drop_down_language_title">Language</string>
+
+    <string name="pref_country_key">country</string>
+    <string name="pref_language_key">language</string>
+    <string name="pref_ui_mode_key">uimode</string>
 
     <!--    PREFERENCES COUNTRY LABELS-->
     <string name="pref_country_any_label">All</string>
@@ -39,6 +26,26 @@
     <string name="pref_country_in_label">India</string>
     <string name="pref_country_cn_label">China</string>
 
-    <!--PREFERENCES LANGUAGE LABELS-->
+    <!--    PREFERENCES LANGUAGE LABELS-->
+    <string name="pref_lang_english_label">English</string>
+    <string name="pref_lang_hindi_label">Hindi</string>
+    <string name="pref_lang_japanese_label">Japanese</string>
+    <string name="pref_lang_chinese_label">Chinese</string>
+    <string name="pref_lang_arabic_label">Arabic</string>
+
+    <!--    PREFERENCES COUNTRY VALUES-->
+    <string name="pref_country_any_values">any</string>
+    <string name="pref_country_us_values">us</string>
+    <string name="pref_country_pk_values">pk</string>
+    <string name="pref_country_jp_values">jp</string>
+    <string name="pref_country_in_values">in</string>
+    <string name="pref_country_cn_values">cn</string>
+
+    <!--    PREFERENCES LANGUAGE VALUES-->
+    <string name="pref_lang_english_values">en</string>
+    <string name="pref_lang_hindi_values">hi</string>
+    <string name="pref_lang_japanese_values">ja</string>
+    <string name="pref_lang_chinese_values">jh</string>
+    <string name="pref_lang_arabic_values">ar</string>
 
 </resources>
