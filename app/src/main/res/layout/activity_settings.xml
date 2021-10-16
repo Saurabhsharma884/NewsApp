@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +19,7 @@
                 style="@style/bartext"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:text="Settings" />
+                android:text="@string/label_settings_activity" />
 
         </androidx.appcompat.widget.Toolbar>
 

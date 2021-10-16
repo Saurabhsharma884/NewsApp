@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,17 +33,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String[] languages = {"en", "hi", "ja", "jh", "ar"};
-    private static final String[] countries = {"any", "cn", "in", "jp", "pk", "us"};
-    private boolean modeState;
-
     String img_url;
     String news_url;
     String title;
     String desc;
     String TAG = "Saurabh";
-    static int country;
-    static int language;
+    String request_Url;
 
     boolean NEWS_LOADED = false;
     int NETWORK_ERROR = 0;
@@ -56,15 +52,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getSettings();
-
+        setUpSharedPreferences();
+        Log.d(TAG, "onCreate: oncreate called");
         Toolbar mtoolbar = findViewById(R.id.toolBar);
+
         setSupportActionBar(mtoolbar);
 
 
         requestQueue = Volley.newRequestQueue(this);
+
         swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+
         checkConnectivity();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,16 +74,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getSettings() {
-        SharedPreferences sharedPreferences = getSharedPreferences("setting", MODE_PRIVATE);
-        language = sharedPreferences.getInt("savedLanguage", 0);
-        country = sharedPreferences.getInt("savedCountry", 0);
-        modeState = sharedPreferences.getBoolean("uiMode", false);
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
+
+    private void setUpSharedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        boolean uiMode = sharedPreferences.getBoolean(getString(R.string.pref_ui_mode_key), getResources().getBoolean(R.bool.pref_mode_default));
+//        if (uiMode)
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        else
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        String prefCountry = sharedPreferences.getString(getString(R.string.pref_country_key), getString(R.string.pref_country_any_values));
+        String prefLanguage = sharedPreferences.getString(getString(R.string.pref_language_key), getString(R.string.pref_lang_english_values));
+        getRequestUrl(prefCountry, prefLanguage);
+
+//        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    private void getRequestUrl(String country, String language) {
+        String URL_BASE = "https://gnews.io/api/v4/top-headlines?";
+        String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
+        request_Url = URL_BASE + "country=" + country + "&lang=" + language + "&token=" + API_KEY;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.settings_menu, menu);
         return true;
     }
@@ -103,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     void makeRequest() {
-        Log.d(TAG, "makeRequest: URL is: " + getRequestUrl());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getRequestUrl(), null, new Response.Listener<JSONObject>() {
+        Log.d(TAG, "makeRequest: URL is: " + request_Url);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, request_Url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 //                Log.d("Saurabh", "onResponse: Everything is good " + response);
@@ -128,11 +147,6 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    private String getRequestUrl() {
-        String URL_BASE = "https://gnews.io/api/v4/top-headlines?";
-        String API_KEY = "192e30720fae3e9854a83bfaac83a8bc";
-        return URL_BASE + "country=" + countries[country] + "&lang=" + languages[language] + "&token=" + API_KEY;
-    }
 
     void makeListFromResponse(JSONObject response) throws JSONException {
         JSONArray articles = response.getJSONArray("articles");
@@ -156,11 +170,11 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-            if (!NEWS_LOADED)
-                makeRequest();
-            else {
-                Toast.makeText(this, "LOADED", Toast.LENGTH_SHORT).show();
-            }
+//            if (!NEWS_LOADED)
+            makeRequest();
+//            else {
+//                Toast.makeText(this, "LOADED", Toast.LENGTH_SHORT).show();
+//            }
         } else {
             alertDialog(NETWORK_ERROR);
         }
@@ -171,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         AlertFragment alert = new AlertFragment(error);
         alert.show(getSupportFragmentManager(), "alert");
     }
+
 
 }
 
