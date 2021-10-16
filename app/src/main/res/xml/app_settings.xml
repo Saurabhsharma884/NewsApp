@@ -6,7 +6,10 @@
         android:summaryOn="@string/pref_summary_on"
         android:title="@string/pref_mode_title" />
 
-    <DropDownPreference android:title="@string/pref_drop_down_country_title" />
+    <DropDownPreference android:title="@string/pref_drop_down_country_title"
+
+        />
+
     <DropDownPreference android:title="@string/pref_drop_down_language_title" />
 
 </PreferenceScreen>

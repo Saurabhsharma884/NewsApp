@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     style="@style/cardTheme"
     android:layout_height="300dp"
-    android:layout_margin="8dp"
+    android:layout_margin="5dp"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="10dp">

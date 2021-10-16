@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">NewsApp</string>
-    <string name="no_network">Internet Not Connected</string>
-    <string name="no_response">Something went wrong</string>
-    <string name="swipe_refresh">Swipe down to Refresh</string>
-    <string name="ok">OK</string>
-</resources>

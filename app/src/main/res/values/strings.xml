@@ -4,6 +4,7 @@
     <string name="no_response">Something went wrong</string>
     <string name="swipe_refresh">Swipe down to Refresh</string>
     <string name="ok">OK</string>
+
     <string name="settings">Settings</string>
     <string name="ui_mode">Mode</string>
     <string name="news_country">Country</string>
@@ -29,4 +30,15 @@
 
     <string name="pref_drop_down_country_title">Country</string>
     <string name="pref_drop_down_language_title">Language</string>
+
+    <!--    PREFERENCES COUNTRY LABELS-->
+    <string name="pref_country_any_label">All</string>
+    <string name="pref_country_us_label">United States</string>
+    <string name="pref_country_pk_label">Pakistan</string>
+    <string name="pref_country_jp_label">Japan</string>
+    <string name="pref_country_in_label">India</string>
+    <string name="pref_country_cn_label">China</string>
+
+    <!--PREFERENCES LANGUAGE LABELS-->
+
 </resources>
