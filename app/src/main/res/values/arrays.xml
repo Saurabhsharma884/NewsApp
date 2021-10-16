@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="country_list_array">
-        <item>@string/any</item>
-        <item>@string/cn</item>
-        <item>@string/in</item>
-        <item>@string/jp</item>
-        <item>@string/pk</item>
-        <item>@string/us</item>
-    </string-array>
+    <array name="pref_country_entries">
+        <item>@string/pref_country_any_label</item>
+        <item>@string/pref_country_in_label</item>
+        <item>@string/pref_country_us_label</item>
+        <item>@string/pref_country_jp_label</item>
+        <item>@string/pref_country_cn_label</item>
+        <item>@string/pref_country_pk_label</item>
+    </array>
 
-    <string-array name="lang_array">
-        <item>@string/en</item>
-        <item>@string/hi</item>
-        <item>@string/ja</item>
-        <item>@string/jh</item>
-        <item>@string/ar</item>
-    </string-array>
+    <array name="pref_country_values">
+        <item>@string/pref_country_any_values</item>
+        <item>@string/pref_country_in_values</item>
+        <item>@string/pref_country_us_values</item>
+        <item>@string/pref_country_jp_values</item>
+        <item>@string/pref_country_cn_values</item>
+        <item>@string/pref_country_pk_values</item>
+    </array>
+
+    <array name="pref_language_entries">
+        <item>@string/pref_lang_english_label</item>
+        <item>@string/pref_lang_hindi_label</item>
+        <item>@string/pref_lang_japanese_label</item>
+        <item>@string/pref_lang_chinese_label</item>
+        <item>@string/pref_lang_arabic_label</item>
+    </array>
+
+    <array name="pref_language_values">
+        <item>@string/pref_lang_english_values</item>
+        <item>@string/pref_lang_hindi_values</item>
+        <item>@string/pref_lang_japanese_values</item>
+        <item>@string/pref_lang_chinese_values</item>
+        <item>@string/pref_lang_arabic_values</item>
+    </array>
 
 </resources>
