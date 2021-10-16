@@ -87,11 +87,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.settings_menu, menu);
-        MenuItem item = menu.findItem(R.id.item_setting);
-        if (modeState)
-            item.setIcon(R.drawable.ic_baseline_settings_24);
-        else
-            item.setIcon(R.drawable.ic_baseline_settings_24_dark);
         return true;
     }
 
@@ -99,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_setting) {
             Toast.makeText(this, "setting clicked", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
         }

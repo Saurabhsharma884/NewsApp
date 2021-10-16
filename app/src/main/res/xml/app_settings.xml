@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
-        android:defaultValue="@string/pref_mode_default"
+        android:defaultValue="@bool/pref_mode_default"
         android:key="@string/pref_ui_mode_key"
         android:summaryOff="@string/pref_summary_off"
         android:summaryOn="@string/pref_summary_on"
