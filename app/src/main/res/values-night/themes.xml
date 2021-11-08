@@ -15,7 +15,7 @@
     </style>
 
     <style name="layoutbg">
-        <item name="android:background">@color/gray_light</item>
+        <item name="android:background">@color/gray_medium</item>
     </style>
 
     <style name="cardTheme">

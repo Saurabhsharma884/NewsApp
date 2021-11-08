@@ -171,11 +171,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-//            if (!NEWS_LOADED)
-            makeRequest();
-//            else {
-//                Toast.makeText(this, "LOADED", Toast.LENGTH_SHORT).show();
-//            }
+           if (!NEWS_LOADED)
+               makeRequest();
+           else {
+               Toast.makeText(this, "LOADED", Toast.LENGTH_SHORT).show();
+           }
         } else {
             alertDialog(NETWORK_ERROR);
         }
