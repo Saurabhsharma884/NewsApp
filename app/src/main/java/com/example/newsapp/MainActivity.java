@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     String img_url;
     String news_url;
@@ -78,22 +79,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void setUpSharedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        boolean uiMode = sharedPreferences.getBoolean(getString(R.string.pref_ui_mode_key), getResources().getBoolean(R.bool.pref_mode_default));
-//        if (uiMode)
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//        else
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        boolean uiMode = sharedPreferences.getBoolean(getString(R.string.pref_ui_mode_key), getResources().getBoolean(R.bool.pref_mode_default));
+        if (uiMode)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         String prefCountry = sharedPreferences.getString(getString(R.string.pref_country_key), getString(R.string.pref_country_any_values));
         String prefLanguage = sharedPreferences.getString(getString(R.string.pref_language_key), getString(R.string.pref_lang_english_values));
         getRequestUrl(prefCountry, prefLanguage);
 
-//        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     private void getRequestUrl(String country, String language) {
@@ -187,5 +188,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_ui_mode_key))) {
+            boolean uiMode = sharedPreferences.getBoolean(getString(R.string.pref_ui_mode_key), getResources().getBoolean(R.bool.pref_mode_default));
+            if (uiMode)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 }
 
