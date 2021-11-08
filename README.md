@@ -10,5 +10,5 @@ This is a simple android app made in Java. It shows top 10 Headlines
   OR
 </p>
 <p align="center">
-   <a href="https://drive.google.com/uc?id=17yp0PyYLM-KTbi7LgGyS8xmd2vKucRvr&export=download" >Click To Download</a>
+   <a href="https://drive.google.com/uc?id=17yp0PyYLM-KTbi7LgGyS8xmd2vKucRvr&export=download" target="_blank" >Click To Download</a>
 </p>
