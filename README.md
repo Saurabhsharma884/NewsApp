@@ -1,5 +1,25 @@
 # News App
-This is a simple android app made in Java. It shows top 10 Headlines
+This is an android application made using Java. It shows top 10 Headlines.
+
+## Features
+- Swipe Down to Refresh
+- Dark Mode
+- 5 Countries
+- 5 Languages
+- Autosave settings
+
+## Implements
+- Volley Library
+- RecyclerView
+- SwipeRefreshLayout
+- SharedPreferences
+- AlertFragment
+
+## Demo
+<p align="center">
+  <img src="https://i.ibb.co/Xpgpsg4/newsapp1.gif" height=400px width=250px>
+  <img src="https://i.ibb.co/9pqwYFt/newsapp2.gif" height=400px width=250px>
+</p>
 
 
 ## Installation
